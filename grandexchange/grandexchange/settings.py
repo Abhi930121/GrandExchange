@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-8pv)rlqgc%1$0aq-pustgwlelu658fhv+e%q9k7s5b%e=86*^w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'grandexchange.co.in',
+    'www.grandexchange.co.in',
+]
+
 
 
 # Application definition
@@ -124,3 +128,4 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
