@@ -1,0 +1,352 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Casino Games</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#0f1724;
+    --card:#0b1220;
+    --muted:#a8b0bf;
+    --accent:#ffb400;
+    --accent-2:#ffd66b;
+    --green:#2fc06f;
+    --glass: rgba(255,255,255,0.04);
+    --max-width:1200px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial;background:linear-gradient(180deg,#071022,var(--bg));color:#fff}
+
+/* Header (GrandExchange style) */
+.header{
+  width:100%;
+  background:#474343;
+  color:#111;
+  position:sticky;
+  top:0;
+  z-index:60;
+  box-shadow:0 2px 0 rgba(0,0,0,0.06);
+}
+.header .wrap{
+  max-width:var(--max-width);
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 20px;
+  gap:16px;
+}
+.brand{display:flex;align-items:center;gap:18px}
+.logo{
+  width:170px;height:56px;background:url('{% static 'grandexchange.png' %}') center/contain no-repeat;
+}
+.nav{
+  display:flex;gap:22px;align-items:center;font-weight:600;
+}
+.nav a{color:#111;text-decoration:none;padding:8px 6px}
+.nav a:hover{color:var(--accent)}
+.nav .has-dd{position:relative}
+.cta-btn{
+  background:#000;color:#fff;padding:12px 20px;border-radius:28px;text-decoration:none;font-weight:700;
+  box-shadow:0 4px 18px rgba(0,0,0,0.15)
+}
+
+/* mobile menu button */
+.menu-btn{display:none;background:transparent;border:0;font-size:26px;cursor:pointer}
+
+/* dropdown */
+.has-dd .dropdown {
+  display: none;
+  position: absolute;
+  background: #fff;
+  padding: 10px 0;
+  list-style: none;
+  margin: 0;
+  min-width: 180px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border-radius: 6px;
+  z-index: 100;
+}
+.has-dd:hover .dropdown {display:block;}
+.has-dd .dropdown li a {
+  display: block;
+  padding: 10px 15px;
+  color: #333;
+  text-decoration: none;
+}
+.has-dd .dropdown li a:hover {background:#f5f5f5;}
+
+/* Hero section */
+.hero{
+  background-image: url('{% static 'casino.jpg' %}');
+  background-size:cover;background-position:center center;padding:80px 20px 60px;color:#fff;
+  position:relative;
+}
+.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(3,6,15,0.35), rgba(3,6,15,0.6));mix-blend-mode:multiply}
+.container{max-width:var(--max-width);margin:0 auto;position:relative;z-index:2;padding:0 20px}
+.hero-inner{max-width:920px}
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:44px;margin:0 0 18px;color:#8ee07f;line-height:1.05;text-shadow:0 4px 40px rgba(0,0,0,0.5)
+}
+.hero p.lead{color:rgba(255,255,255,0.92);line-height:1.7;font-size:18px;margin:0 0 26px;opacity:0.95}
+
+/* Content section */
+.content{
+  max-width:900px;
+  margin:32px auto;
+  background:rgba(0,0,0,0.3);
+  padding:28px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.06);
+}
+.content h2{color:var(--accent);margin-bottom:12px;font-family:'Playfair Display',serif;}
+.content ul{margin:12px 0 18px 20px;}
+.content li{margin-bottom:8px;}
+
+/* WhatsApp floating button */
+.whats-float{position:fixed;right:18px;bottom:18px;background:linear-gradient(180deg,#14a76c,#0e8b59);width:64px;height:64px;border-radius:64px;display:flex;align-items:center;justify-content:center;z-index:80;box-shadow:0 8px 26px rgba(0,0,0,0.4)}
+.whats-float img{width:38px;height:38px}
+
+/* Drawer for mobile */
+.drawer{position:fixed;top:0;left:-280px;width:280px;height:100%;background:#0b0b0b;padding:22px;transition:all .28s ease;z-index:90}
+.drawer.open{left:0}
+.drawer a{display:block;color:var(--muted);padding:12px 0;text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.03)}
+
+/* Responsiveness */
+@media(max-width:700px){
+  .nav{display:none}
+  .menu-btn{display:block}
+}
+
+
+/* footer */
+.footer{
+  background:#0b0b0b;padding:36px 20px 18px;color:var(--muted);
+}
+.footer .foot-inner{max-width:var(--max-width);margin:0 auto;display:flex;gap:24px;flex-wrap:wrap;justify-content:space-between}
+.foot-col{min-width:180px;flex:1}
+.foot-col h4{color:#fff;margin:0 0 12px}
+.foot-bottom{max-width:var(--max-width);margin:18px auto 0;padding-top:12px;border-top:1px solid rgba(255,255,255,0.04);text-align:center}
+
+/* whatsapp floating */
+.whats-float{position:fixed;right:18px;bottom:18px;background:linear-gradient(180deg,#14a76c,#0e8b59);width:64px;height:64px;border-radius:64px;display:flex;align-items:center;justify-content:center;z-index:80;box-shadow:0 8px 26px rgba(0,0,0,0.4)}
+.whats-float img{width:38px;height:38px}
+
+/* drawer */
+.drawer{position:fixed;top:0;left:-280px;width:280px;height:100%;background:#0b0b0b;padding:22px;transition:all .28s ease;z-index:90}
+.drawer.open{left:0}
+.drawer a{display:block;color:var(--muted);padding:12px 0;text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.03)}
+
+/* responsiveness */
+@media(max-width:1100px){
+  .grid-carousel{grid-template-columns:repeat(2,1fr)}
+  .slider .slide{flex:0 0 48%}
+  .hero h1{font-size:40px}
+}
+@media(max-width:700px){
+  .nav{display:none}
+  .menu-btn{display:block}
+  .grid-carousel{grid-template-columns:1fr}
+  .slider{overflow-x:auto;gap:12px;padding-bottom:6px}
+  .slider .slide{min-width:270px;flex:0 0 80%}
+  .about-inner{grid-template-columns:1fr}
+  .hero h1{font-size:32px}
+  .hero p.lead{font-size:16px}
+}
+@media(max-width:420px){
+  .logo{width:140px;height:48px;background-size:contain}
+  .hero{padding:40px 14px}
+  .hero h1{font-size:26px}
+}
+
+
+.whatsapp-btn{
+  display:block;margin:32px auto 0;padding:14px 28px;border-radius:40px;border:3px solid rgba(0,0,0,0.6);
+  width:360px;max-width:92%; margin-bottom: 38px; text-align:center;font-weight:800;background:rgba(255,255,255,0.05);color:#fff;
+  box-shadow:0 8px 30px rgba(0,0,0,0.45)
+  
+}
+</style>
+</head>
+<body>
+
+
+<!-- Header -->
+<header class="header" role="banner">
+  <div class="wrap">
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
+    </div>
+
+    <nav class="nav" role="navigation" aria-label="Main">
+      <a href="{% url 'Home' %}" style="color:var(--accent);text-decoration:underline">Home</a>
+      <div class="has-dd">
+  <a href="#">Services ▾</a>
+  <ul class="dropdown">
+    <li><a href="{% url 'cricket' %}">Cricket Betting</a></li>
+    <li><a href="{% url 'casino' %}">Casino Betting</a></li>
+    <li><a href="{% url 'football' %}">Football Betting</a></li>
+    <li><a href="{% url 'card' %}">Card Games</a></li>
+  </ul>
+</div>
+
+<a href="{% url 'about' %}">About </a>
+   
+    </nav>
+
+    <div style="display:flex;align-items:center;gap:14px">
+      <a class="cta-btn" href="#getid">Click for ID</a>
+      <button class="menu-btn" id="openMenu" aria-label="Open menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<!-- Drawer for mobile -->
+<div class="drawer" id="drawer" aria-hidden="true">
+  <a href="{% url 'Home' %}">Home</a>
+  <a href="{% url 'casino' %}">Casino</a>
+  <a href="{% url 'cricket' %}">Cricket</a>
+  <a href="{% url 'football' %}">Football</a>
+  <a href="{% url 'card' %}">Card Games</a>
+  <a href="{% url 'about' %}">About</a>
+
+  <div style="margin-top:12px">
+    <a class="cta-btn" href="#getid" style="display:inline-block;padding:10px 16px">
+      Click for ID
+    </a>
+  </div>
+</div>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="container hero-inner">
+    <h1>Casino Betting</h1>
+    <p class="lead">GrandExchange brings you India's most exciting and secure casino betting experience with live games, instant deposits, fast withdrawals, and verified betting IDs.</p>
+  </div>
+</section>
+
+<!-- Content Section -->
+<div class="content">
+  <h2>Why Choose GrandExchange for Casino?</h2>
+  <ul>
+    <li>Live Casino Games Including Roulette, Poker, and Slots</li>
+    <li>Instant Account Creation & Dedicated Support</li>
+    <li>Safe, Secured & Licensed Platform</li>
+    <li>Real-Time Betting with Fast Withdrawals</li>
+    <li>24/7 Customer Assistance for Casino Players</li>
+    <li>Exclusive Casino Tournaments & Promotions</li>
+  </ul>
+  <p>Get your instant casino betting ID by contacting our team on WhatsApp.</p>
+</div>
+
+
+ <a class="whatsapp-btn" id="waCenter"> 
+
+
+    <img src="{% static 'whatsapp.png' %}" alt="" style="width:26px;height:26px;vertical-align:middle;margin-right:10px"> WHATS APP US NOW
+  </a>
+
+<!-- WhatsApp Button -->
+<a class="whats-float" href="https://wa.me/917587914617"><img src="{% static 'whatsapp.png' %}" alt="WhatsApp"></a>
+
+
+<!-- Footer -->
+<footer class="footer" role="contentinfo">
+  <div class="foot-inner">
+    <div class="foot-col">
+      <h4>GrandExchange</h4>
+      <p style="color:var(--muted);max-width:320px">India’s largest exchange platform. Trusted cricket demo ID platform & instant withdrawals.</p>
+    </div>
+
+    <div class="foot-col">
+      <h4>Quick Links</h4>
+      <p><a href="#" style="color:var(--muted);text-decoration:none">Home</a> · <a href="#" style="color:var(--muted);text-decoration:none">Services</a></p>
+      <p><a href="#" style="color:var(--muted);text-decoration:none">Platform</a> · <a href="#" style="color:var(--muted);text-decoration:none">Support</a></p>
+    </div>
+
+    <div class="foot-col">
+      <h4>Contact</h4>
+      <p style="color:var(--muted)">WhatsApp: <strong style="color:#fff">+91 7587914617</strong></p>
+      <p style="color:var(--muted)">Email: <strong style="color:#fff">GrandExchange@gmail.com</strong></p>
+    </div>
+  </div>
+
+  <div class="foot-bottom">
+    © <span id="year"></span> GrandExchange.Live — All rights reserved.
+  </div>
+</footer>
+
+<!-- WhatsApp floating -->
+<a id="whatsFloat" class="whats-float" href="#" aria-label="WhatsApp">
+  <img src="{% static 'whatsapp.png' %}" alt="WhatsApp">
+</a>
+
+<script>
+/* Config: change WhatsApp number here (international format without +) */
+const WHATSAPP_NUMBER = "917587914617"; // -> opens chat using wa.me/<number>
+
+/* header drawer toggle */
+const drawer = document.getElementById('drawer');
+const openMenu = document.getElementById('openMenu');
+openMenu.addEventListener('click', ()=> drawer.classList.add('open'));
+drawer.addEventListener('click', (e)=>{ if(e.target === drawer) drawer.classList.remove('open') });
+
+/* set dynamic year */
+document.getElementById('year').innerText = new Date().getFullYear();
+
+/* Make Instagram cards clickable -> open WhatsApp */
+document.querySelectorAll('[data-wlink]').forEach(card=>{
+  card.addEventListener('click', ()=>{
+    const msg = encodeURIComponent("Hello! I'm interested in this post. Please help.");
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
+    window.open(url,'_blank');
+  });
+});
+
+/* Floating WhatsApp button */
+const whatsFloat = document.getElementById('whatsFloat');
+whatsFloat.href = `https://wa.me/${WHATSAPP_NUMBER}`;
+
+/* Central WhatsApp button */
+document.getElementById('waCenter').addEventListener('click', ()=>{
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}`,'_blank');
+});
+
+/* Payment proofs simple slider */
+(function(){
+  const s = document.getElementById('proofSlider');
+  const slides = Array.from(s.querySelectorAll('.slide'));
+  let idx = 0;
+
+  function show(idx){
+    // translate to show element at index center - we'll manipulate scrollLeft for simplicity
+    const el = slides[idx];
+    el.scrollIntoView({behavior:'smooth',inline:'center'});
+  }
+  document.getElementById('prevProof').addEventListener('click', ()=>{
+    idx = Math.max(0, idx-1);
+    show(idx);
+  });
+  document.getElementById('nextProof').addEventListener('click', ()=>{
+    idx = Math.min(slides.length-1, idx+1);
+    show(idx);
+  });
+})();
+
+/* small enhancement: keyboard arrows for proofs */
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'ArrowLeft') document.getElementById('prevProof').click();
+  if(e.key === 'ArrowRight') document.getElementById('nextProof').click();
+});
+</script>
+
+</body>
+</html>
