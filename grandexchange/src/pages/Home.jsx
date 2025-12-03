@@ -9,6 +9,11 @@ export default function Home() {
   const [feeds, setFeeds] = useState([]);
   const [proofs, setProofs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [feedIndex, setFeedIndex] = useState(0);
+  const [proofIndex, setProofIndex] = useState(0);
+
+  const feedsPerPage = 3;
+  const proofsPerPage = 3;
 
   useEffect(() => {
     fetchData();
@@ -39,6 +44,25 @@ export default function Home() {
     const msg = encodeURIComponent(`Hello! I'm interested in: ${caption}`);
     window.open(`https://wa.me/917587914617?text=${msg}`, '_blank');
   };
+
+  const handleFeedPrev = () => {
+    setFeedIndex((prev) => Math.max(0, prev - feedsPerPage));
+  };
+
+  const handleFeedNext = () => {
+    setFeedIndex((prev) => Math.min(feeds.length - feedsPerPage, prev + feedsPerPage));
+  };
+
+  const handleProofPrev = () => {
+    setProofIndex((prev) => Math.max(0, prev - proofsPerPage));
+  };
+
+  const handleProofNext = () => {
+    setProofIndex((prev) => Math.min(proofs.length - proofsPerPage, prev + proofsPerPage));
+  };
+
+  const visibleFeeds = feeds.slice(feedIndex, feedIndex + feedsPerPage);
+  const visibleProofs = proofs.slice(proofIndex, proofIndex + proofsPerPage);
 
   return (
     <>
@@ -71,22 +95,45 @@ export default function Home() {
             ) : feeds.length === 0 ? (
               <p style={{ textAlign: 'center' }}>No Instagram feeds uploaded yet.</p>
             ) : (
-              <div className="grid-carousel">
-                {feeds.map(feed => (
-                  <div 
-                    key={feed.id} 
-                    className="card-feed"
-                    onClick={() => openWhatsApp(feed.caption)}
-                    style={{ cursor: 'pointer' }}
-                  >
-                    <div className="card-thumb" style={{ backgroundImage: `url(${feed.image})` }}></div>
-                    <div className="card-meta">
-                      <h4>{feed.caption}</h4>
-                      <small>{new Date(feed.created_at?.toDate()).toLocaleString()}</small>
+              <>
+                <div className="grid-carousel">
+                  {visibleFeeds.map(feed => (
+                    <div 
+                      key={feed.id} 
+                      className="card-feed"
+                      onClick={() => openWhatsApp(feed.caption)}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <div className="card-thumb" style={{ backgroundImage: `url(${feed.image})` }}></div>
+                      <div className="card-meta">
+                        <h4>{feed.caption}</h4>
+                        <small>{new Date(feed.created_at?.toDate()).toLocaleString()}</small>
+                      </div>
                     </div>
+                  ))}
+                </div>
+                {feeds.length > feedsPerPage && (
+                  <div className="nav-buttons">
+                    <button 
+                      className="nav-btn" 
+                      onClick={handleFeedPrev}
+                      disabled={feedIndex === 0}
+                    >
+                      ← Previous
+                    </button>
+                    <span className="nav-info">
+                      {feedIndex + 1} - {Math.min(feedIndex + feedsPerPage, feeds.length)} of {feeds.length}
+                    </span>
+                    <button 
+                      className="nav-btn" 
+                      onClick={handleFeedNext}
+                      disabled={feedIndex + feedsPerPage >= feeds.length}
+                    >
+                      Next →
+                    </button>
                   </div>
-                ))}
-              </div>
+                )}
+              </>
             )}
           </div>
         </div>
@@ -97,13 +144,36 @@ export default function Home() {
         <div className="container">
           <div className="title" style={{ fontSize: '34px' }}>Payment Proofs</div>
           {proofs.length > 0 && (
-            <div className="slider">
-              {proofs.map(proof => (
-                <div key={proof.id} className="slide">
-                  <div className="proof" style={{ backgroundImage: `url(${proof.image})` }}></div>
+            <>
+              <div className="slider">
+                {visibleProofs.map(proof => (
+                  <div key={proof.id} className="slide">
+                    <div className="proof" style={{ backgroundImage: `url(${proof.image})` }}></div>
+                  </div>
+                ))}
+              </div>
+              {proofs.length > proofsPerPage && (
+                <div className="nav-buttons">
+                  <button 
+                    className="nav-btn" 
+                    onClick={handleProofPrev}
+                    disabled={proofIndex === 0}
+                  >
+                    ← Previous
+                  </button>
+                  <span className="nav-info">
+                    {proofIndex + 1} - {Math.min(proofIndex + proofsPerPage, proofs.length)} of {proofs.length}
+                  </span>
+                  <button 
+                    className="nav-btn" 
+                    onClick={handleProofNext}
+                    disabled={proofIndex + proofsPerPage >= proofs.length}
+                  >
+                    Next →
+                  </button>
                 </div>
-              ))}
-            </div>
+              )}
+            </>
           )}
         </div>
       </section>
@@ -246,14 +316,14 @@ export default function Home() {
           font-size: 13px;
         }
         .slider {
-          display: flex;
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
           gap: 18px;
-          overflow-x: auto;
           padding: 24px 0;
+          max-width: 1100px;
+          margin: 0 auto;
         }
         .slide {
-          min-width: 320px;
-          flex: 0 0 32%;
           background: linear-gradient(180deg,#09312a,#074437);
           border-radius: 12px;
           padding: 14px;
@@ -264,6 +334,39 @@ export default function Home() {
           background-size: cover;
           background-position: center;
           border-radius: 10px;
+        }
+        .nav-buttons {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 20px;
+          margin-top: 30px;
+        }
+        .nav-btn {
+          background: var(--accent);
+          color: #000;
+          border: none;
+          padding: 12px 24px;
+          border-radius: 8px;
+          font-weight: 700;
+          font-size: 16px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+        .nav-btn:hover:not(:disabled) {
+          background: #9ef590;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(142, 224, 127, 0.4);
+        }
+        .nav-btn:disabled {
+          background: rgba(142, 224, 127, 0.3);
+          cursor: not-allowed;
+          opacity: 0.5;
+        }
+        .nav-info {
+          color: var(--muted);
+          font-size: 14px;
+          font-weight: 600;
         }
         .about {
           background-size: cover;
@@ -322,6 +425,9 @@ export default function Home() {
           .grid-carousel {
             grid-template-columns: repeat(2, 1fr);
           }
+          .slider {
+            grid-template-columns: repeat(2, 1fr);
+          }
           .about-inner {
             grid-template-columns: repeat(2, 1fr);
           }
@@ -330,11 +436,22 @@ export default function Home() {
           .grid-carousel {
             grid-template-columns: 1fr;
           }
+          .slider {
+            grid-template-columns: 1fr;
+          }
           .about-inner {
             grid-template-columns: 1fr;
           }
           .hero h1 {
             font-size: 32px;
+          }
+          .nav-buttons {
+            flex-direction: column;
+            gap: 12px;
+          }
+          .nav-btn {
+            width: 100%;
+            max-width: 200px;
           }
         }
       `}</style>
