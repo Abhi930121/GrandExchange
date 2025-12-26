@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
@@ -14,12 +16,21 @@ export default function Footer() {
         <div className="foot-col">
           <h4>Quick Links</h4>
           <p>
-            <a href="#" style={{ color: 'var(--muted)' }}>Home</a> ·{' '}
-            <a href="#" style={{ color: 'var(--muted)' }}>Services</a>
+            <Link to="/" style={{ color: 'var(--muted)' }}>Home</Link> ·{' '}
+            <Link to="/about" style={{ color: 'var(--muted)' }}>About</Link>
           </p>
           <p>
-            <a href="#" style={{ color: 'var(--muted)' }}>Platform</a> ·{' '}
-            <a href="#" style={{ color: 'var(--muted)' }}>Support</a>
+            <Link to="/contact" style={{ color: 'var(--muted)' }}>Contact Us</Link>
+          </p>
+        </div>
+
+        <div className="foot-col">
+          <h4>Legal</h4>
+          <p>
+            <Link to="/privacy-policy" style={{ color: 'var(--muted)' }}>Privacy Policy</Link>
+          </p>
+          <p>
+            <Link to="/terms-conditions" style={{ color: 'var(--muted)' }}>Terms & Conditions</Link>
           </p>
         </div>
 
@@ -60,12 +71,27 @@ export default function Footer() {
           color: #fff;
           margin: 0 0 12px;
         }
+        .foot-col p {
+          margin-bottom: 6px;
+        }
+        .foot-col a:hover {
+          color: var(--accent) !important;
+        }
         .foot-bottom {
           max-width: var(--max-width);
           margin: 18px auto 0;
           padding-top: 12px;
           border-top: 1px solid rgba(255, 255, 255, 0.04);
           text-align: center;
+        }
+        @media (max-width: 600px) {
+          .foot-inner {
+            flex-direction: column;
+            gap: 20px;
+          }
+          .foot-col {
+            min-width: 100%;
+          }
         }
       `}</style>
     </footer>
