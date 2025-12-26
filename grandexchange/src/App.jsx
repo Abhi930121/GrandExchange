@@ -9,6 +9,9 @@ import Login from './pages/Login';
 import AdminDash from './pages/AdminDash';
 import AddInstaFeeds from './pages/AddInstaFeeds';
 import AddPaymentProof from './pages/AddPaymentProof';
+import ContactUs from './pages/ContactUs';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsConditions from './pages/TermsConditions';
 
 function App() {
   return (
@@ -24,6 +27,9 @@ function App() {
         <Route path="/admindash" element={<AdminDash />} />
         <Route path="/addinstafeeds" element={<AddInstaFeeds />} />
         <Route path="/addpaymentproof" element={<AddPaymentProof />} />
+        <Route path="/contact" element={<ContactUs />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-conditions" element={<TermsConditions />} />
       </Routes>
     </BrowserRouter>
   );
