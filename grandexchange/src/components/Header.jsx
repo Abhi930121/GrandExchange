@@ -24,8 +24,8 @@ export default function Header() {
                 <li><Link to="/card">Card Games</Link></li>
               </ul>
             </div>
-            <Link to="/about">About</Link>
             <li><Link to="/gaming-platform">Gaming Platform</Link></li>
+            <Link to="/about">About</Link>
           </nav>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
@@ -143,4 +143,5 @@ export default function Header() {
   );
 
 }
+
 
