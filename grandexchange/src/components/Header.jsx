@@ -24,6 +24,7 @@ export default function Header() {
                 <li><Link to="/card">Card Games</Link></li>
               </ul>
             </div>
+            <li><Link to="/gaming-platform">Gaming Platform</Link></li>
             <Link to="/about">About</Link>
           </nav>
 
@@ -140,4 +141,5 @@ export default function Header() {
       `}</style>
     </>
   );
+
 }
