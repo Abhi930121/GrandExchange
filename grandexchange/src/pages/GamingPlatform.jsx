@@ -1,8 +1,5 @@
 export default function GamingPlatform() {
   return (
-    <section style={{ padding: '40px 20px' }}>
-      <h1>Gaming Platform</h1>
-
       <iframe
         src="https://demo.oriolai.com/ge/"
         title="Gaming Platform"
@@ -14,6 +11,5 @@ export default function GamingPlatform() {
         }}
         allowFullScreen
       />
-    </section>
   );
 }
