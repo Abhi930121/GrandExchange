@@ -12,6 +12,7 @@ import AddPaymentProof from './pages/AddPaymentProof';
 import ContactUs from './pages/ContactUs';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsConditions from './pages/TermsConditions';
+import GamingPlatform from './pages/GamingPlatform';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/addpaymentproof" element={<AddPaymentProof />} />
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/gaming-platform" element={<GamingPlatform />} />
         <Route path="/terms-conditions" element={<TermsConditions />} />
       </Routes>
     </BrowserRouter>
